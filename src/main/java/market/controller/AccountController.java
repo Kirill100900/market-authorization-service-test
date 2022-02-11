@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
+// TODO @Константин
+// РЕСПОНС везде
+// где пагинация? должна быть тут
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/admin/accounts")
 public class AccountController {
 
-    private AccountService accountService;
+    private final AccountService accountService;
 
-
-    @Autowired
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
-    @GetMapping("/admin/accounts")
+    @GetMapping
     public ResponseEntity<List<AccountDto>> getAccounts() {
         return new ResponseEntity<>(accountService.findAllAccount(), HttpStatus.OK);
     }
