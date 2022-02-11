@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-table-roles" author="Troyanovskiy">
+        <createTable tableName="roles">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="authority" type="character varying(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-table-accounts" author="Troyanovskiy">
+        <createTable tableName="accounts">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="character varying(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="character varying(255)" />
+            <column name="role" type="character varying(255)">
+                <constraints foreignKeyName="role_authority_accounts_role"
+                             references="roles(authority)" nullable="false"/>
+            </column>
+            <column name="is_blocked" type="boolean" defaultValueBoolean="false"/>
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>

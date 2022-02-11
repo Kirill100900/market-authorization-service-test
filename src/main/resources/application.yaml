@@ -1,0 +1,34 @@
+server:
+  port: 8082
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+springfox:
+  documentation:
+    swaggerUi:
+      baseUrl: /api/doc
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: market-authorization
+  security:
+    oauth2:
+      client:
+        registration:
+          vk:
+            client-id: ${vk.client.id}
+            client-secret: ${vk.client.secret}
+            authorization-grant-type: authorization_code
+            redirectUri: "http://localhost:8082/api/auth/oauth2/callback/{registrationId}"
+            scope: email
+        provider:
+          vk:
+            authorizationUri: https://oauth.vk.com/authorize?v=${vk.client.api.version}
+            tokenUri: https://oauth.vk.com/access_token
+            userInfoUri: https://api.vk.com/method/users.get?v=${vk.client.api.version}&{user_id}
+            user-name-attribute: "user_id"
