@@ -1,6 +1,8 @@
 package market.controller;
 
 import market.dto.AccountDto;
+import market.response.Response;
+import market.response.SuccessResponse;
 import market.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +27,9 @@ public class AccountController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountDto>> getAccounts() {
-        return new ResponseEntity<>(accountService.findAllAccount(), HttpStatus.OK);
+    public Response<List<AccountDto>> getAccounts() {
+        SuccessResponse<List<AccountDto>> response = Response.success(accountService.findAllAccount());
+        response.setStatus(200);
+        return response;
     }
 }

@@ -3,6 +3,7 @@ package market.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.ws.rs.DefaultValue;
 
 @Entity
@@ -19,6 +20,7 @@ public class Account {
     private String email;
 
     @Column
+    @NotBlank
     private String password;
 
     @NotNull
