@@ -9,8 +9,10 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class AuthorizationServiceImpl implements AuthorizationService {
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
