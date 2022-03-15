@@ -43,4 +43,9 @@ public class RoleDaoImpl implements RoleDao {
             return 0L;
         }
     }
+
+    @Override
+    public void saveRole(Role role) {
+        em.persist(role);
+    }
 }

@@ -3,6 +3,7 @@ package market.service;
 import market.dao.RoleDao;
 import market.model.Role;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -20,5 +21,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public long getRoleIdByRoleName(String role) {
         return roleDao.getRoleIdByRoleName(role);
+    }
+
+    @Transactional
+    @Override
+    public void saveRole(Role role) {
+        roleDao.saveRole(role);
     }
 }
