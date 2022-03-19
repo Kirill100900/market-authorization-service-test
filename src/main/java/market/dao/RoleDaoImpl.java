@@ -2,6 +2,7 @@ package market.dao;
 
 import market.model.Role;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -45,6 +46,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
+    @Transactional
     public void saveRole(Role role) {
         em.persist(role);
     }

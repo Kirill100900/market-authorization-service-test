@@ -6,6 +6,4 @@ public interface RoleService {
     Role getRoleByName(String role);
 
     long getRoleIdByRoleName(String role);
-
-    void saveRole(Role role);
 }

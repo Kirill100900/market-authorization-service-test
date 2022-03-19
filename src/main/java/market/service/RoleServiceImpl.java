@@ -22,10 +22,4 @@ public class RoleServiceImpl implements RoleService {
     public long getRoleIdByRoleName(String role) {
         return roleDao.getRoleIdByRoleName(role);
     }
-
-    @Transactional
-    @Override
-    public void saveRole(Role role) {
-        roleDao.saveRole(role);
-    }
 }
