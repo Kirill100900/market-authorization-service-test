@@ -29,6 +29,7 @@ public class JwtServiceImpl implements JwtService {
                 .setExpiration(expiration)
                 .setSubject(account.getEmail())
                 .claim("role", account.getRole().getAuthority())
+                .claim("account_id", account.getId())
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
