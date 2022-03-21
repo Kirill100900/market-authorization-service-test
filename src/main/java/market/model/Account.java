@@ -3,6 +3,7 @@ package market.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.ws.rs.DefaultValue;
 
@@ -17,6 +18,7 @@ public class Account {
     private Long id;
 
     @Column(nullable = false)
+    @Email
     private String email;
 
     @Column

@@ -1,6 +1,7 @@
 package market.service;
 
 import market.dto.*;
+import market.exception.AccountExistException;
 import market.feign.ProfileFeignClient;
 import market.model.Account;
 import market.model.Role;
@@ -18,15 +19,17 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final ProfileFeignClient profileFeignClient;
+    private final RoleService roleService;
 
     @Value("${jwt.token.expiration}")
     private long jwtExpiration;
 
-    public AuthorizationServiceImpl(AccountService accountService, PasswordEncoder passwordEncoder, JwtService jwtService, ProfileFeignClient profileFeignClient) {
+    public AuthorizationServiceImpl(AccountService accountService, PasswordEncoder passwordEncoder, JwtService jwtService, ProfileFeignClient profileFeignClient, RoleService roleService) {
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.profileFeignClient = profileFeignClient;
+        this.roleService = roleService;
     }
 
     @Override
@@ -47,13 +50,16 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public AuthResponse signUp(SignUpRequest request) {
-        Account account = new Account(request.email(), request.password(), false);
-        account.setRole(new Role("ROLE_USER"));
-        accountService.saveAccount(account);
+        if (Boolean.FALSE.equals(accountService.existAccountByEmail(request.email()))) {
+            Account account = new Account(request.email(), request.password(), false);
+            account.setRole(roleService.getRoleByName("ROLE_USER"));
+            accountService.saveAccount(account);
 
-        ProfileDto profile = new ProfileDto(null, account.getId(), request.email(), request.firstName(), request.lastName());
-        profile = profileFeignClient.saveProfile(profile);
-        return new AuthResponse(new UserResponse(profile.id(), profile.firstName(), profile.lastName(), profile.email(), account.getRole().getAuthority(), account.getBlocked()),
-                new AuthToken(jwtService.createToken(account), jwtExpiration));
+            ProfileDto profile = new ProfileDto(null, account.getId(), request.email(), request.firstName(), request.lastName());
+            profile = profileFeignClient.saveProfile(profile);
+            return new AuthResponse(new UserResponse(profile.id(), profile.firstName(), profile.lastName(), profile.email(), account.getRole().getAuthority(), account.getBlocked()),
+                    new AuthToken(jwtService.createToken(account), jwtExpiration));
+        }
+        throw new AccountExistException("Such an email already exists");
     }
 }
