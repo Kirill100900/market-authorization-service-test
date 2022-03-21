@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-// TODO написать нормальный метод логина / регистарции - без учета спринг секьюрити, валидировать приходящий ДТО, выкидывать эксепшен если валидация не проходит ( кастомный _
 public class AccountServiceImpl implements AccountService {
 
     private final AccountDao accountDao;
