@@ -37,5 +37,7 @@ spring:
             user-name-attribute: "user_id"
 
 #JWT token
-jwt.token.expiration=1800000
-jwt.token.secret=eyJhbGciOiJIUzI1NiJ9.anVzdCBzaW1wbGUgand0IHNlY3JldA.ZcTm5ZNbTNV32-KYBsNilKWx80WYoCeeEU6OPYVaeAU
+jwt:
+  token:
+    expiration: 1800000
+    secret: eyJhbGciOiJIUzI1NiJ9.anVzdCBzaW1wbGUgand0IHNlY3JldA.ZcTm5ZNbTNV32-KYBsNilKWx80WYoCeeEU6OPYVaeAU
