@@ -35,3 +35,7 @@ spring:
             tokenUri: https://oauth.vk.com/access_token
             userInfoUri: https://api.vk.com/method/users.get?v=${vk.client.api.version}&{user_id}
             user-name-attribute: "user_id"
+
+#JWT token
+jwt.token.expiration=1800000
+jwt.token.secret=eyJhbGciOiJIUzI1NiJ9.anVzdCBzaW1wbGUgand0IHNlY3JldA.ZcTm5ZNbTNV32-KYBsNilKWx80WYoCeeEU6OPYVaeAU
