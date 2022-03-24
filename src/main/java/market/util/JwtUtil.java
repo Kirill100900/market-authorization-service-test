@@ -1,6 +1,7 @@
 package market.util;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import market.model.Account;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +44,7 @@ public class JwtUtil {
                 .setSubject(username)
                 .setIssuedAt(createdDate)
                 .setExpiration(new Date((new Date()).getTime() + this.expirationTime))
-                .signWith(key)
+                .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
 }
