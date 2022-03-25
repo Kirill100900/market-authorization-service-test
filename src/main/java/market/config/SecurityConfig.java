@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers(AUTH_WHITELIST).permitAll()
-                    .anyRequest().authenticated()
+                    .antMatchers("/api/doc/swagger-ui").permitAll();
+                    /*.anyRequest().authenticated()
                 .and()
                 .logout()
                     .permitAll()
@@ -73,24 +73,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .userService(vkOAuth2UserService)
                 .and()
                 .authorizedClientService(vkOAuth2AuthorizedClientService)
-                .successHandler(vkSavedRequestAwareAuthenticationSuccessHandler);
+                .successHandler(vkSavedRequestAwareAuthenticationSuccessHandler)*/
     }
 
-    @Bean
-    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
-        DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient =
-                new DefaultAuthorizationCodeTokenResponseClient();
-        accessTokenResponseClient.setRequestEntityConverter(vkRequestEntityConverter);
-
-        OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter =
-                new OAuth2AccessTokenResponseHttpMessageConverter();
-        tokenResponseHttpMessageConverter.setTokenResponseConverter(new VkTokenResponseConverter());
-
-        RestTemplate restTemplate = new RestTemplate(Arrays.asList(new FormHttpMessageConverter(),
-                tokenResponseHttpMessageConverter));
-        restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
-
-        accessTokenResponseClient.setRestOperations(restTemplate);
-        return accessTokenResponseClient;
-    }
+//    @Bean
+//    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
+//        DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient =
+//                new DefaultAuthorizationCodeTokenResponseClient();
+//        accessTokenResponseClient.setRequestEntityConverter(vkRequestEntityConverter);
+//
+//        OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter =
+//                new OAuth2AccessTokenResponseHttpMessageConverter();
+//        tokenResponseHttpMessageConverter.setTokenResponseConverter(new VkTokenResponseConverter());
+//
+//        RestTemplate restTemplate = new RestTemplate(Arrays.asList(new FormHttpMessageConverter(),
+//                tokenResponseHttpMessageConverter));
+//        restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
+//
+//        accessTokenResponseClient.setRestOperations(restTemplate);
+//        return accessTokenResponseClient;
+//    }
 }

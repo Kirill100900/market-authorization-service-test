@@ -48,17 +48,30 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountDto> findAllAccount() {
+    public List<AccountDto> findAllAccount(int page, int pageSize) {
         List<Account> accountList = accountDao.findAll();
         if (accountList == null) {
             return Collections.emptyList();
         }
-        return accountList.stream()
+        List<AccountDto> sourceList = accountList.stream()
                 .map(account -> {
                     long profileId = profileFeignClient.findProfileById(account.getId())
                             .id();
                     return new AccountDto(account, profileId);
                 })
                 .collect(Collectors.toList());
+
+
+        if(pageSize <= 0 || page <= 0) {
+            throw new IllegalArgumentException("invalid page size: " + pageSize);
+        }
+
+        int fromIndex = (page - 1) * pageSize;
+        if(sourceList == null || sourceList.size() <= fromIndex){
+            return Collections.emptyList();
+        }
+
+        return sourceList.subList(fromIndex, Math.min(fromIndex + pageSize, sourceList.size()));
     }
+
 }
