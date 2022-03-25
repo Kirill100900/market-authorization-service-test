@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value="market-profiles", url = "http://localhost:8087")
+@FeignClient(value="MARKET-PROFILES")
 public interface ProfileFeignClient {
 
     @GetMapping("/api/profiles")
