@@ -48,8 +48,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountDto> findAllAccount() {
-        List<Account> accountList = accountDao.findAll();
+    public List<AccountDto> findAllAccount(String search) {
+        List<Account> accountList = accountDao.findAll(search);
         if (accountList == null) {
             return Collections.emptyList();
         }
@@ -60,7 +60,6 @@ public class AccountServiceImpl implements AccountService {
                     return new AccountDto(account, profileId);
                 })
                 .collect(Collectors.toList());
-
 
     }
 

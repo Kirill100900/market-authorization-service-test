@@ -33,25 +33,28 @@ public class AccountController {
     private int countOnPage;
 
 
-    public AccountController(AccountService accountService,  PageDtoService pageDtoService) {
+    public AccountController(AccountService accountService, PageDtoService pageDtoService) {
         this.accountService = accountService;
         this.pageDtoService = pageDtoService;
     }
 
     @GetMapping
-    public Response<List<AccountDto>> getAccounts() {
-        SuccessResponse<List<AccountDto>> response = Response.success(accountService.findAllAccount());
+    public Response<List<AccountDto>> getAccounts(
+            @RequestParam(value = "search", defaultValue = "") String search
+    ) {
+        SuccessResponse<List<AccountDto>> response = Response.success(accountService.findAllAccount(search));
         response.setStatus(200);
         return response;
     }
 
     @GetMapping("/page")
     public Response<PageDto> getAccountsPage(
-            @RequestParam int currentPage
+            @RequestParam int currentPage,
+            @RequestParam(value = "search", defaultValue = "") String search
     ) {
         SuccessResponse<PageDto> response = Response.success(pageDtoService.getPageDto(currentPage,
                 this.countOnPage,
-                accountService.findAllAccount()));
+                accountService.findAllAccount(search)));
         response.setStatus(200);
         return response;
     }

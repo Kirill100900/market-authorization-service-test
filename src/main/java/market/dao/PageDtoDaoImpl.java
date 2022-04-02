@@ -19,9 +19,9 @@ public class PageDtoDaoImpl implements PageDtoDao {
     public long getTotalEntitiesCount() {
         Query query = entityManager.createQuery(
                 """
-                SELECT COUNT (a)
-                FROM Account a
-                """
+                        SELECT COUNT (a)
+                        FROM Account a
+                        """
         );
         return (long) query.getSingleResult();
     }

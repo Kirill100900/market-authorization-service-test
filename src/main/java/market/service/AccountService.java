@@ -12,6 +12,6 @@ public interface AccountService {
 
     Account findAccountByEmail(String email);
 
-    List<AccountDto> findAllAccount();
+    List<AccountDto> findAllAccount(String search);
 
 }
