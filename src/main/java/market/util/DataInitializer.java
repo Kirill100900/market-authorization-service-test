@@ -2,6 +2,7 @@ package market.util;
 
 import market.dao.RoleDao;
 import market.dto.ProfileDto;
+import market.exception.CreateProfileException;
 import market.feign.ProfileFeignClient;
 import market.model.Account;
 import market.model.Role;
@@ -28,11 +29,21 @@ public record DataInitializer(AccountService accountService, RoleDao roleDao, Pr
 
         if (Boolean.FALSE.equals(accountService.existAccountByEmail("user@mail.ru"))) {
             accountService.saveAccount(user);
-            profile.saveProfile(new ProfileDto(null, user.getId(), user.getEmail(), "User", "User"));
+            try {
+                profile.saveProfile(new ProfileDto(null, user.getId(), user.getEmail(), "User", "User"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
         if (Boolean.FALSE.equals(accountService.existAccountByEmail("admin@mail.ru"))) {
             accountService.saveAccount(admin);
-            profile.saveProfile(new ProfileDto(null, admin.getId(), admin.getEmail(), "Admin", "Admin"));
+            try {
+                profile.saveProfile(new ProfileDto(null, admin.getId(), admin.getEmail(), "Admin", "Admin"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }
