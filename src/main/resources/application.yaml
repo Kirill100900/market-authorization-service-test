@@ -19,19 +19,25 @@ spring:
     active: dev
   application:
     name: market-authorization
-  security:
-    oauth2:
-      client:
-        registration:
-          vk:
-            client-id: ${vk.client.id}
-            client-secret: ${vk.client.secret}
-            authorization-grant-type: authorization_code
-            redirectUri: "http://localhost:8082/api/auth/oauth2/callback/{registrationId}"
-            scope: email
-        provider:
-          vk:
-            authorizationUri: https://oauth.vk.com/authorize?v=${vk.client.api.version}
-            tokenUri: https://oauth.vk.com/access_token
-            userInfoUri: https://api.vk.com/method/users.get?v=${vk.client.api.version}&{user_id}
-            user-name-attribute: "user_id"
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          vk:
+#            client-id: ${vk.client.id}
+#            client-secret: ${vk.client.secret}
+#            authorization-grant-type: authorization_code
+#            redirectUri: "http://localhost:8082/api/auth/oauth2/callback/{registrationId}"
+#            scope: email
+#        provider:
+#          vk:
+#            authorizationUri: https://oauth.vk.com/authorize?v=${vk.client.api.version}
+#            tokenUri: https://oauth.vk.com/access_token
+#            userInfoUri: https://api.vk.com/method/users.get?v=${vk.client.api.version}&{user_id}
+#            user-name-attribute: "user_id"
+
+#JWT token
+jwt:
+  token:
+    expiration: 1800000
+    secret: eyJhbGciOiJIUzI1NiJ9.anVzdCBzaW1wbGUgand0IHNlY3JldA.ZcTm5ZNbTNV32-KYBsNilKWx80WYoCeeEU6OPYVaeAU
