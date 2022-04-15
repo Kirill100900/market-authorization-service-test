@@ -61,13 +61,15 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public List<Account> findAll() {
+    public List<Account> findAll(String search) {
         String query = """
                 SELECT a
                 FROM Account a
+                WHERE a.email LIKE lower(concat('%', :search, '%'))
                 """;
         try {
             return em.createQuery(query, Account.class)
+                    .setParameter("search", search)
                     .getResultList();
         } catch (NoResultException ignored) {
             return null;

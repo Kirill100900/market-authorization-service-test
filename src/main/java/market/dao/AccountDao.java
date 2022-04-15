@@ -11,5 +11,5 @@ public interface AccountDao {
 
     Account findAccountByEmail(String email);
 
-    List<Account> findAll();
+    List<Account> findAll(String search);
 }
