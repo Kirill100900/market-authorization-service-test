@@ -18,16 +18,16 @@ public class ProfileClientFallbackFactory implements FallbackFactory<ProfileFeig
         return new ProfileFeignClient() {
             @Override
             public ProfileDto findProfileByEmail(String email) {
-                LOGGER.error("It worked Hystrix Circuit Breaker");
+                LOGGER.error(cause.getMessage());
                 throw new RuntimeException();
             }
 
 
             @Override
             public ProfileDto saveProfile(ProfileDto profile) {
-                LOGGER.error("It worked Hystrix Circuit Breaker");
+                LOGGER.error(cause.getMessage());
                 try {
-                    throw new AccountSaveException("Profile creation error");
+                    throw new AccountSaveException();
                 } catch (AccountSaveException e) {
                     e.printStackTrace();
                 }
@@ -36,7 +36,7 @@ public class ProfileClientFallbackFactory implements FallbackFactory<ProfileFeig
 
             @Override
             public ProfileDto findProfileById(Long accountId) {
-                LOGGER.error("It worked Hystrix Circuit Breaker");
+                LOGGER.error(cause.getMessage());
                 throw new RuntimeException();
             }
 

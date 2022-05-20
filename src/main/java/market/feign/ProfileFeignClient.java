@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "market-profiles", fallbackFactory = ProfileClientFallbackFactory.class)
+@FeignClient(value = "MARKET-PROFILES", fallbackFactory = ProfileClientFallbackFactory.class)
 public interface ProfileFeignClient {
 
     @GetMapping("/api/profiles")
