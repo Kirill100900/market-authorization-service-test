@@ -4,7 +4,6 @@ import market.dto.*;
 import market.exception.AccountExistException;
 import market.feign.ProfileFeignClient;
 import market.model.Account;
-import market.model.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,7 +40,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         if (passwordEncoder.matches(loginRequestCredentials.password(), account.getPassword())) {
             ProfileDto profile = profileFeignClient.findProfileByEmail(account.getEmail());
-            return new AuthResponse(new UserResponse(profile.id(), profile.firstName(), profile.lastName(), profile.email(), account.getRole().getAuthority(), account.getBlocked()),
+            return new AuthResponse(new UserResponse(profile.id(), profile.firstName(), profile.lastName(), profile.email(), account.getRole()
+                    .getAuthority(), account.getBlocked()),
                     new AuthToken(jwtService.createToken(account), jwtExpiration));
         }
 
@@ -57,7 +57,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
             ProfileDto profile = new ProfileDto(null, account.getId(), request.email(), request.firstName(), request.lastName());
             profile = profileFeignClient.saveProfile(profile);
-            return new AuthResponse(new UserResponse(profile.id(), profile.firstName(), profile.lastName(), profile.email(), account.getRole().getAuthority(), account.getBlocked()),
+            return new AuthResponse(new UserResponse(profile.id(), profile.firstName(), profile.lastName(), profile.email(), account.getRole()
+                    .getAuthority(), account.getBlocked()),
                     new AuthToken(jwtService.createToken(account), jwtExpiration));
         }
         throw new AccountExistException("Such an email already exists");
