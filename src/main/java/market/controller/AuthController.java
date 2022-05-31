@@ -5,6 +5,7 @@ import market.dto.SignUpRequest;
 import market.dto.UserDtoAuthorization;
 
 import market.service.AuthorizationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,8 +24,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public AuthResponse signUp(@RequestBody SignUpRequest request) {
-        return authorizationService.signUp(request);
+    public ResponseEntity signUp(@RequestBody SignUpRequest request) {
+        authorizationService.signUp(request);
+        return ResponseEntity.ok().build();
     }
 
 }

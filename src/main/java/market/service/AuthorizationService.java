@@ -7,5 +7,5 @@ import market.dto.UserDtoAuthorization;
 public interface AuthorizationService {
     AuthResponse signIn(UserDtoAuthorization loginRequestCredentials);
 
-    AuthResponse signUp(SignUpRequest request);
+    void signUp(SignUpRequest request);
 }
