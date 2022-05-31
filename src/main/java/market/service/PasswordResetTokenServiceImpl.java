@@ -1,5 +1,7 @@
 package market.service;
 
+import market.exception.AccountNotExistException;
+import market.exception.TokenExpireOrNotFoundException;
 import market.model.Account;
 import market.model.PasswordResetToken;
 import market.repositories.PasswordResetTokenRepository;
@@ -21,25 +23,22 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     }
 
     @Override
-    public boolean resetPassword(String email) {
+    public void resetPassword(String email) {
         Account account = accountService.findAccountByEmail(email);
         if (account == null) {
-            return false;
+            throw new AccountNotExistException(String.format("Account with email: %s not found", email));
         }
-
         passwordResetTokenRepository.deleteAllByAccountId(account.getId());
-
         String token = createPasswordResetTokenForAccount(account);
-        System.out.println("Token:" + token);
         /// TODO Отправка письма с токеном
-
-        return true;
     }
 
     @Override
-    public boolean verifyToken(String token) {
+    public void verifyToken(String token) {
         PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token);
-        return passwordResetToken != null ? isTokenNotExpired(passwordResetToken) : false;
+        if (passwordResetToken == null || isTokenExpired(passwordResetToken)) {
+            throw new TokenExpireOrNotFoundException(String.format("Token: %s expire or not found", token));
+        }
     }
 
     private String createPasswordResetTokenForAccount(Account account) {
@@ -49,8 +48,8 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
         return token;
     }
 
-    private boolean isTokenNotExpired(PasswordResetToken passToken) {
+    private boolean isTokenExpired(PasswordResetToken passToken) {
         final Calendar cal = Calendar.getInstance();
-        return !passToken.getExpiryDate().before(cal.getTime());
+        return passToken.getExpiryDate().before(cal.getTime());
     }
 }

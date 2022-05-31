@@ -1,7 +1,6 @@
 package market.controller;
 
 import market.service.PasswordResetTokenService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +16,13 @@ public class PasswordResetTokenController {
 
     @PostMapping("/reset")
     public ResponseEntity resetPassword(@RequestParam("email") String email) {
-        return passwordResetTokenService.resetPassword(email) ?
-                ResponseEntity.ok().build() :
-                ResponseEntity.notFound().build();
+        passwordResetTokenService.resetPassword(email);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/verify")
     public ResponseEntity verifyToken(@RequestParam("token") String token) {
-        return passwordResetTokenService.verifyToken(token) ?
-                ResponseEntity.ok().build() :
-                ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        passwordResetTokenService.verifyToken(token);
+        return ResponseEntity.ok().build();
     }
 }
