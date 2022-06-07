@@ -61,18 +61,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public AuthResponse vkSigIn(AuthVkUser user) {
+    public AuthResponse authorizationByVk(AuthVkUser user) {
         Account account;
         ProfileDto profile;
         if (Boolean.FALSE.equals(accountService.existAccountByEmail(user.email()))) {
             account = createAccount(user.email(), UUID.randomUUID().toString(), false);
             profile = createProfile(account.getId(), user.firstName(), user.lastName(), user.email());
-            System.out.println("account created");
-        }
-        else {
+        } else {
             account = accountService.findAccountByEmail(user.email());
             profile = profileFeignClient.findProfileByEmail(account.getEmail());
-            System.out.println("account found");
         }
 
         return new AuthResponse(new UserResponse(profile.id(), profile.firstName(), profile.lastName(),

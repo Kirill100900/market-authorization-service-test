@@ -10,5 +10,5 @@ public interface AuthorizationService {
 
     void signUp(SignUpRequest request);
 
-    AuthResponse vkSigIn(AuthVkUser user);
+    AuthResponse authorizationByVk(AuthVkUser user);
 }
