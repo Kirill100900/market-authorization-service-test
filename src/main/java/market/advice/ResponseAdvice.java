@@ -1,10 +1,7 @@
 package market.advice;
 
 import market.anatation.ResponseExceptionHandler;
-import market.exception.AccountExistException;
-import market.exception.AccountNotExistException;
-import market.exception.ResponseException;
-import market.exception.TokenExpireOrNotFoundException;
+import market.exception.*;
 import market.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,7 +18,8 @@ public class ResponseAdvice {
             ResponseException.class,
             AccountExistException.class,
             AccountNotExistException.class,
-            TokenExpireOrNotFoundException.class})
+            TokenExpireOrNotFoundException.class,
+            VkAuthException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Response handleException(Exception e) {
         return Response.error().code(500).message(e.getMessage()).build();

@@ -40,4 +40,4 @@ spring:
 jwt:
   token:
     expiration: 1800000
-    secret: eyJhbGciOiJIUzI1NiJ9.anVzdCBzaW1wbGUgand0IHNlY3JldA.ZcTm5ZNbTNV32-KYBsNilKWx80WYoCeeEU6OPYVaeAU
+    secret: vPhiUi99h/wprHc3yo6PEX3xaF+riErC7qQPtzgyjPkKjaHZfL9U1EoWM0Qh8aCefrLqK0F4EaA1ojKN3asIHyUOQmmDa7pzRNoydW3DKaMKWDkGqBPt9ijdd8raawH5KahULQ==
