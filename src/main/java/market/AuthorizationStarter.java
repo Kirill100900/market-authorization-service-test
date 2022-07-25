@@ -11,6 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableEurekaClient
 @EnableFeignClients
 @EnableHystrix
+//todo for training
 public class AuthorizationStarter {
 
     public static void main(String[] args) {
