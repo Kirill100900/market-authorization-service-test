@@ -4,8 +4,11 @@ import market.dto.AuthResponse;
 import market.dto.SignUpRequest;
 import market.dto.UserDtoAuthorization;
 
+import market.model.Message;
 import market.service.AuthorizationService;
+import market.service.ProducerService;
 import market.service.VkAuthorizationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,4 +49,14 @@ public class AuthController {
     public AuthResponse vkSigIn(@RequestParam(value = "code") String code) throws IOException, ExecutionException, InterruptedException {
         return authorizationService.authorizationByVk(vkAuthorizationService.authorizationByCode(code));
     }
+
+    @Autowired
+    private ProducerService producerService;
+
+    @GetMapping("/generate")
+    public String generate(@RequestParam String message, @RequestParam Integer number) {
+        producerService.produce(new Message(message, number));
+        return "OK";
+    }
+
 }
